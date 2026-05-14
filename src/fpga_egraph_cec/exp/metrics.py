@@ -1,0 +1,3 @@
+def collect_metrics(before: Circuit, after: Circuit, alignment: AlignmentResult | None,
+                    verify: VerificationResult | None) -> dict:
+    ...

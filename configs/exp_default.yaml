@@ -1,0 +1,27 @@
+input_format: aiger
+bench_root: data/raw/benchmarks
+output_root: data/results
+timeout_sec: 300
+
+normalize:
+  enable: true
+  max_rounds: 8
+  max_rules: 50
+
+align:
+  enable: true
+  min_signature_match: 0.7
+  max_candidates_per_node: 20
+
+verify:
+  enable_abc: true
+  use_aligned_miter: true
+  use_standard_miter: true
+
+metrics:
+  - circuit_size
+  - circuit_depth
+  - miter_size
+  - alignment_coverage
+  - verify_time
+  - verify_status
