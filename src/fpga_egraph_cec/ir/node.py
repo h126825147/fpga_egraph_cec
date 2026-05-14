@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 from typing import Tuple, Dict, Any
 
+
 @dataclass(frozen=True)
 class Node:
     id: int

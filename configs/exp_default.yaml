@@ -3,15 +3,23 @@ bench_root: data/raw/benchmarks
 output_root: data/results
 timeout_sec: 300
 
+abc:
+  enabled: true
+  binary: external/abc/abc
+  timeout_sec: 300
+
 normalize:
   enable: true
   max_rounds: 8
   max_rules: 50
+  use_egglog: true
+  fallback_sort_commutative: true
 
 align:
   enable: true
   min_signature_match: 0.7
   max_candidates_per_node: 20
+  use_outputs_as_anchors: true
 
 verify:
   enable_abc: true
@@ -25,3 +33,19 @@ metrics:
   - alignment_coverage
   - verify_time
   - verify_status
+
+groups:
+  smoke:
+    max_nodes: 500
+    max_outputs: 50
+    max_cases: 10
+
+  alignment:
+    max_nodes: 5000
+    max_outputs: 200
+    max_cases: 20
+
+  main:
+    max_nodes: 50000
+    max_outputs: 1000
+    max_cases: 50

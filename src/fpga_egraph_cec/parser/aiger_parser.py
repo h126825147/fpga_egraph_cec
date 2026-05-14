@@ -1,41 +1,34 @@
-def load_aiger(path: str) -> Circuit:
-    """Parse AIGER/AIG and return a Circuit."""
-    with open(path, "r") as f:
-        lines = f.readlines()
+from pathlib import Path
+from ..ir.circuit import Circuit
+from ..ir.node import Node
 
-    # Parse header
-    header = lines[0].strip().split()
-    assert header[0] == "aag", "Only AIGER ASCII format is supported."
-    M, I, L, O, A = map(int, header[1:6])
 
-    circuit = Circuit(name=path)
+def load_aag(path: str) -> Circuit:
+    p = Path(path)
+    lines = [ln.strip() for ln in p.read_text().splitlines() if ln.strip()]
+    assert lines[0].startswith("aag"), "Only textual AAG is supported in v1"
 
-    # Parse inputs
-    for i in range(1, I + 1):
-        lit = int(lines[i].strip())
+    _, m, i, l, o, a = lines[0].split()
+    i, o, a = int(i), int(o), int(a)
+
+    c = Circuit(name=p.stem)
+    idx = 1
+    inputs = []
+    for _ in range(i):
+        lit = int(lines[idx])
         nid = lit // 2
-        circuit.inputs.append(nid)
-        circuit.add_node(Node(id=nid, op="input", args=()))
+        c.add_node(Node(id=nid, op="INPUT", args=(), name=f"in{nid}", src="A"))
+        inputs.append(nid)
+        idx += 1
 
-    # Parse latches (ignored for combinational circuits)
-    for i in range(I + 1, I + L + 1):
-        pass
+    outputs = []
+    for _ in range(o):
+        lit = int(lines[idx])
+        outputs.append(lit // 2)
+        idx += 1
 
-    # Parse outputs
-    for i in range(I + L + 1, I + L + O + 1):
-        lit = int(lines[i].strip())
-        nid = M + len(circuit.outputs) + 1
-        circuit.outputs.append(nid)
-        circuit.add_node(Node(id=nid, op="output", args=(lit // 2,)))
-
-    # Parse AND gates
-    for i in range(I + L + O + 1, I + L + O + A + 1):
-        parts = lines[i].strip().split()
-        assert len(parts) == 3
-        lhs_lit, rhs0_lit, rhs1_lit = map(int, parts)
-        nid = lhs_lit // 2
-        rhs0_nid = rhs0_lit // 2
-        rhs1_nid = rhs1_lit // 2
-        circuit.add_node(Node(id=nid, op="and", args=(rhs0_nid, rhs1_nid)))
-
-    return circuit
+    # NOTE: proper AIG parsing will need AND gate decoding from literals.
+    # This is a placeholder skeleton for v1.
+    c.inputs = inputs
+    c.outputs = outputs
+    return c
