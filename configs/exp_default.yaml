@@ -8,6 +8,10 @@ abc:
   binary: external/abc/abc
   timeout_sec: 300
 
+yosys:
+  enabled: true
+  binary: /usr/local/bin/yosys
+
 normalize:
   enable: true
   max_rounds: 8

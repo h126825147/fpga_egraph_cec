@@ -1,0 +1,11 @@
+name,group,category,kind,path,aig_path,circuit_size,alignment_score,standard_miter_size,aligned_miter_size,verify_status,verify_time
+adder,smoke,epfl,aiger,data/raw/benchmarks/prepared/adder.aag,data/raw/benchmarks/prepared/adder.aag,256,1.0,130,130,unknown,0.020676374435424805
+bar,smoke,epfl,aiger,data/raw/benchmarks/prepared/bar.aag,data/raw/benchmarks/prepared/bar.aag,135,1.0,129,129,unknown,0.021619319915771484
+div,alignment,epfl,aiger,data/raw/benchmarks/prepared/div.aag,data/raw/benchmarks/prepared/div.aag,128,1.0,129,129,unknown,0.021512508392333984
+hyp,alignment,epfl,aiger,data/raw/benchmarks/prepared/hyp.aag,data/raw/benchmarks/prepared/hyp.aag,256,1.0,129,129,unknown,0.020566701889038086
+log2,alignment,epfl,aiger,data/raw/benchmarks/prepared/log2.aag,data/raw/benchmarks/prepared/log2.aag,32,1.0,33,33,unknown,0.021338224411010742
+max,alignment,epfl,aiger,data/raw/benchmarks/prepared/max.aag,data/raw/benchmarks/prepared/max.aag,512,1.0,131,131,unknown,0.02121901512145996
+multiplier,main,epfl,aiger,data/raw/benchmarks/prepared/multiplier.aag,data/raw/benchmarks/prepared/multiplier.aag,128,1.0,129,129,unknown,0.02177715301513672
+sin,smoke,epfl,aiger,data/raw/benchmarks/prepared/sin.aag,data/raw/benchmarks/prepared/sin.aag,24,1.0,26,26,unknown,0.02091050148010254
+sqrt,main,epfl,aiger,data/raw/benchmarks/prepared/sqrt.aag,data/raw/benchmarks/prepared/sqrt.aag,128,1.0,65,65,unknown,0.021252155303955078
+square,main,epfl,aiger,data/raw/benchmarks/prepared/square.aag,data/raw/benchmarks/prepared/square.aag,64,1.0,129,129,unknown,0.021835803985595703

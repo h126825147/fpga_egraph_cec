@@ -1,5 +1,48 @@
 {
   "group": "smoke",
-  "elapsed_sec": 9.5367431640625e-07,
-  "results": null
+  "elapsed_sec": 0.07735633850097656,
+  "results": [
+    {
+      "name": "adder",
+      "group": "smoke",
+      "category": "epfl",
+      "kind": "aiger",
+      "path": "data/raw/benchmarks/prepared/adder.aag",
+      "aig_path": "data/raw/benchmarks/prepared/adder.aag",
+      "circuit_size": 256,
+      "alignment_score": 1.0,
+      "standard_miter_size": 130,
+      "aligned_miter_size": 130,
+      "verify_status": "unknown",
+      "verify_time": 0.019951581954956055
+    },
+    {
+      "name": "bar",
+      "group": "smoke",
+      "category": "epfl",
+      "kind": "aiger",
+      "path": "data/raw/benchmarks/prepared/bar.aag",
+      "aig_path": "data/raw/benchmarks/prepared/bar.aag",
+      "circuit_size": 135,
+      "alignment_score": 1.0,
+      "standard_miter_size": 129,
+      "aligned_miter_size": 129,
+      "verify_status": "unknown",
+      "verify_time": 0.02134108543395996
+    },
+    {
+      "name": "sin",
+      "group": "smoke",
+      "category": "epfl",
+      "kind": "aiger",
+      "path": "data/raw/benchmarks/prepared/sin.aag",
+      "aig_path": "data/raw/benchmarks/prepared/sin.aag",
+      "circuit_size": 24,
+      "alignment_score": 1.0,
+      "standard_miter_size": 26,
+      "aligned_miter_size": 26,
+      "verify_status": "unknown",
+      "verify_time": 0.021587848663330078
+    }
+  ]
 }

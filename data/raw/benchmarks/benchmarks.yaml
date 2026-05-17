@@ -12,6 +12,33 @@ benchmarks:
     path: data/raw/benchmarks/arithmetic/bar.v
     kind: verilog
     category: epfl
+    group: smoke
+    tags: [arith, smoke, epfl]
+    expected_equal: true
+    source: epfl
+
+  - name: div
+    path: data/raw/benchmarks/arithmetic/div.v
+    kind: verilog
+    category: epfl
+    group: alignment
+    tags: [arith, alignment, epfl]
+    expected_equal: true
+    source: epfl
+
+  - name: hyp
+    path: data/raw/benchmarks/arithmetic/hyp.v
+    kind: verilog
+    category: epfl
+    group: alignment
+    tags: [arith, alignment, epfl]
+    expected_equal: true
+    source: epfl
+
+  - name: log2
+    path: data/raw/benchmarks/arithmetic/log2.v
+    kind: verilog
+    category: epfl
     group: alignment
     tags: [arith, alignment, epfl]
     expected_equal: true
@@ -26,8 +53,35 @@ benchmarks:
     expected_equal: true
     source: epfl
 
+  - name: multiplier
+    path: data/raw/benchmarks/arithmetic/multiplier.v
+    kind: verilog
+    category: epfl
+    group: main
+    tags: [arith, main, epfl]
+    expected_equal: true
+    source: epfl
+
   - name: sin
     path: data/raw/benchmarks/arithmetic/sin.v
+    kind: verilog
+    category: epfl
+    group: smoke
+    tags: [arith, smoke, epfl]
+    expected_equal: true
+    source: epfl
+
+  - name: sqrt
+    path: data/raw/benchmarks/arithmetic/sqrt.v
+    kind: verilog
+    category: epfl
+    group: main
+    tags: [arith, main, epfl]
+    expected_equal: true
+    source: epfl
+
+  - name: square
+    path: data/raw/benchmarks/arithmetic/square.v
     kind: verilog
     category: epfl
     group: main

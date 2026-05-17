@@ -1,0 +1,121 @@
+benchmarks:
+- name: adder
+  path: data/raw/benchmarks/prepared/adder.aag
+  kind: aiger
+  category: epfl
+  group: smoke
+  tags:
+  - arith
+  - smoke
+  - epfl
+  expected_equal: true
+  source: epfl
+  aig_path: data/raw/benchmarks/prepared/adder.aag
+- name: bar
+  path: data/raw/benchmarks/prepared/bar.aag
+  kind: aiger
+  category: epfl
+  group: smoke
+  tags:
+  - arith
+  - smoke
+  - epfl
+  expected_equal: true
+  source: epfl
+  aig_path: data/raw/benchmarks/prepared/bar.aag
+- name: div
+  path: data/raw/benchmarks/prepared/div.aag
+  kind: aiger
+  category: epfl
+  group: alignment
+  tags:
+  - arith
+  - alignment
+  - epfl
+  expected_equal: true
+  source: epfl
+  aig_path: data/raw/benchmarks/prepared/div.aag
+- name: hyp
+  path: data/raw/benchmarks/prepared/hyp.aag
+  kind: aiger
+  category: epfl
+  group: alignment
+  tags:
+  - arith
+  - alignment
+  - epfl
+  expected_equal: true
+  source: epfl
+  aig_path: data/raw/benchmarks/prepared/hyp.aag
+- name: log2
+  path: data/raw/benchmarks/prepared/log2.aag
+  kind: aiger
+  category: epfl
+  group: alignment
+  tags:
+  - arith
+  - alignment
+  - epfl
+  expected_equal: true
+  source: epfl
+  aig_path: data/raw/benchmarks/prepared/log2.aag
+- name: max
+  path: data/raw/benchmarks/prepared/max.aag
+  kind: aiger
+  category: epfl
+  group: alignment
+  tags:
+  - arith
+  - alignment
+  - epfl
+  expected_equal: true
+  source: epfl
+  aig_path: data/raw/benchmarks/prepared/max.aag
+- name: multiplier
+  path: data/raw/benchmarks/prepared/multiplier.aag
+  kind: aiger
+  category: epfl
+  group: main
+  tags:
+  - arith
+  - main
+  - epfl
+  expected_equal: true
+  source: epfl
+  aig_path: data/raw/benchmarks/prepared/multiplier.aag
+- name: sin
+  path: data/raw/benchmarks/prepared/sin.aag
+  kind: aiger
+  category: epfl
+  group: smoke
+  tags:
+  - arith
+  - smoke
+  - epfl
+  expected_equal: true
+  source: epfl
+  aig_path: data/raw/benchmarks/prepared/sin.aag
+- name: sqrt
+  path: data/raw/benchmarks/prepared/sqrt.aag
+  kind: aiger
+  category: epfl
+  group: main
+  tags:
+  - arith
+  - main
+  - epfl
+  expected_equal: true
+  source: epfl
+  aig_path: data/raw/benchmarks/prepared/sqrt.aag
+- name: square
+  path: data/raw/benchmarks/prepared/square.aag
+  kind: aiger
+  category: epfl
+  group: main
+  tags:
+  - arith
+  - main
+  - epfl
+  expected_equal: true
+  source: epfl
+  aig_path: data/raw/benchmarks/prepared/square.aag

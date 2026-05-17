@@ -5,6 +5,7 @@ import argparse
 import csv
 import json
 import time
+
 import yaml
 
 from fpga_egraph_cec.bench.loader import load_benchmarks
@@ -28,7 +29,7 @@ def main() -> None:
     args = ap.parse_args()
 
     cfg_path = Path(args.config)
-    cfg = yaml.safe_load(cfg_path.read_text())
+    cfg = yaml.safe_load(cfg_path.read_text()) or {}
 
     bench_yaml = Path(args.benchmarks) if args.benchmarks else Path(cfg["bench_root"]) / "benchmarks.yaml"
     cases = load_benchmarks(str(bench_yaml))
@@ -46,11 +47,17 @@ def main() -> None:
     json_path = out_root / f"batch_{args.group}.json"
     csv_path = out_root / f"batch_{args.group}.csv"
 
-    json_path.write_text(json.dumps({
-        "group": args.group,
-        "elapsed_sec": elapsed,
-        "results": results,
-    }, indent=2, ensure_ascii=False))
+    json_path.write_text(
+        json.dumps(
+            {
+                "group": args.group,
+                "elapsed_sec": elapsed,
+                "results": results,
+            },
+            indent=2,
+            ensure_ascii=False,
+        )
+    )
 
     if results:
         with csv_path.open("w", newline="", encoding="utf-8") as f:
