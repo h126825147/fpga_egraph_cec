@@ -1,0 +1,36 @@
+benchmarks:
+  - name: adder
+    path: data/raw/benchmarks/arithmetic/adder.v
+    kind: verilog
+    category: epfl
+    group: smoke
+    tags: [arith, smoke, epfl]
+    expected_equal: true
+    source: epfl
+
+  - name: bar
+    path: data/raw/benchmarks/arithmetic/bar.v
+    kind: verilog
+    category: epfl
+    group: alignment
+    tags: [arith, alignment, epfl]
+    expected_equal: true
+    source: epfl
+
+  - name: max
+    path: data/raw/benchmarks/arithmetic/max.v
+    kind: verilog
+    category: epfl
+    group: alignment
+    tags: [arith, alignment, epfl]
+    expected_equal: true
+    source: epfl
+
+  - name: sin
+    path: data/raw/benchmarks/arithmetic/sin.v
+    kind: verilog
+    category: epfl
+    group: main
+    tags: [arith, main, epfl]
+    expected_equal: true
+    source: epfl
