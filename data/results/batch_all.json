@@ -1,6 +1,6 @@
 {
   "group": "all",
-  "elapsed_sec": 0.3188753128051758,
+  "elapsed_sec": 0.3113389015197754,
   "results": [
     {
       "name": "adder",
@@ -14,7 +14,8 @@
       "standard_miter_size": 130,
       "aligned_miter_size": 130,
       "verify_status": "unknown",
-      "verify_time": 0.020676374435424805
+      "verify_time": 0.020922183990478516,
+      "abc_returncode": 0
     },
     {
       "name": "bar",
@@ -28,7 +29,8 @@
       "standard_miter_size": 129,
       "aligned_miter_size": 129,
       "verify_status": "unknown",
-      "verify_time": 0.021619319915771484
+      "verify_time": 0.021332979202270508,
+      "abc_returncode": 0
     },
     {
       "name": "div",
@@ -42,7 +44,8 @@
       "standard_miter_size": 129,
       "aligned_miter_size": 129,
       "verify_status": "unknown",
-      "verify_time": 0.021512508392333984
+      "verify_time": 0.02196669578552246,
+      "abc_returncode": 0
     },
     {
       "name": "hyp",
@@ -56,7 +59,8 @@
       "standard_miter_size": 129,
       "aligned_miter_size": 129,
       "verify_status": "unknown",
-      "verify_time": 0.020566701889038086
+      "verify_time": 0.020618677139282227,
+      "abc_returncode": 0
     },
     {
       "name": "log2",
@@ -70,7 +74,8 @@
       "standard_miter_size": 33,
       "aligned_miter_size": 33,
       "verify_status": "unknown",
-      "verify_time": 0.021338224411010742
+      "verify_time": 0.020601511001586914,
+      "abc_returncode": 0
     },
     {
       "name": "max",
@@ -84,7 +89,8 @@
       "standard_miter_size": 131,
       "aligned_miter_size": 131,
       "verify_status": "unknown",
-      "verify_time": 0.02121901512145996
+      "verify_time": 0.02051067352294922,
+      "abc_returncode": 0
     },
     {
       "name": "multiplier",
@@ -98,7 +104,8 @@
       "standard_miter_size": 129,
       "aligned_miter_size": 129,
       "verify_status": "unknown",
-      "verify_time": 0.02177715301513672
+      "verify_time": 0.019566774368286133,
+      "abc_returncode": 0
     },
     {
       "name": "sin",
@@ -112,7 +119,8 @@
       "standard_miter_size": 26,
       "aligned_miter_size": 26,
       "verify_status": "unknown",
-      "verify_time": 0.02091050148010254
+      "verify_time": 0.021216154098510742,
+      "abc_returncode": 0
     },
     {
       "name": "sqrt",
@@ -126,7 +134,8 @@
       "standard_miter_size": 65,
       "aligned_miter_size": 65,
       "verify_status": "unknown",
-      "verify_time": 0.021252155303955078
+      "verify_time": 0.020742416381835938,
+      "abc_returncode": 0
     },
     {
       "name": "square",
@@ -140,7 +149,8 @@
       "standard_miter_size": 129,
       "aligned_miter_size": 129,
       "verify_status": "unknown",
-      "verify_time": 0.021835803985595703
+      "verify_time": 0.01967167854309082,
+      "abc_returncode": 0
     }
   ]
 }

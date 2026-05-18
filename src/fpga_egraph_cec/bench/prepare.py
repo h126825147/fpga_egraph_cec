@@ -42,7 +42,11 @@ def detect_verilog_top(src: Path) -> str:
     return mod_defs[0]
 
 
-def convert_to_aag(case: BenchmarkCase, out_dir: str | Path) -> BenchmarkCase:
+def convert_to_aag(
+    case: BenchmarkCase,
+    out_dir: str | Path,
+    yosys_bin: str = "yosys",
+) -> BenchmarkCase:
     """
     Convert Verilog/VHDL benchmark to textual AAG.
     Requires yosys in PATH.
@@ -66,14 +70,14 @@ def convert_to_aag(case: BenchmarkCase, out_dir: str | Path) -> BenchmarkCase:
             f"proc; opt; aigmap; "
             f"write_aiger -ascii {out_aag}"
         )
-        _run(["yosys", "-p", script])
+        _run([yosys_bin, "-p", script])
 
     elif src.suffix.lower() in {".vhd", ".vhdl"}:
         # VHDL -> AIGER
         # 若你已安装 ghdl + yosys plugin，可用下面路线；
         # 如果当前环境还没有 ghdl-yosys，请先把 VHDL 预处理为 Verilog 或 AIGER。
         # script = f"ghdl {src}; synth; opt; aigmap; write_aiger {out_aag}"
-        # _run(["yosys", "-p", script])
+        # _run([yosys_bin, "-p", script])
 
         raise NotImplementedError(
             "VHDL conversion is not enabled yet in this minimal version. "

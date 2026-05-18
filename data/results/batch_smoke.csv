@@ -1,4 +1,4 @@
-name,group,category,kind,path,aig_path,circuit_size,alignment_score,standard_miter_size,aligned_miter_size,verify_status,verify_time
-adder,smoke,epfl,aiger,data/raw/benchmarks/prepared/adder.aag,data/raw/benchmarks/prepared/adder.aag,256,1.0,130,130,unknown,0.019951581954956055
-bar,smoke,epfl,aiger,data/raw/benchmarks/prepared/bar.aag,data/raw/benchmarks/prepared/bar.aag,135,1.0,129,129,unknown,0.02134108543395996
-sin,smoke,epfl,aiger,data/raw/benchmarks/prepared/sin.aag,data/raw/benchmarks/prepared/sin.aag,24,1.0,26,26,unknown,0.021587848663330078
+name,group,category,kind,path,aig_path,circuit_size,alignment_score,standard_miter_size,aligned_miter_size,verify_status,verify_time,abc_returncode
+adder,smoke,epfl,aiger,data/raw/benchmarks/prepared/adder.aag,data/raw/benchmarks/prepared/adder.aag,256,1.0,130,130,unknown,0.01967930793762207,0
+bar,smoke,epfl,aiger,data/raw/benchmarks/prepared/bar.aag,data/raw/benchmarks/prepared/bar.aag,135,1.0,129,129,unknown,0.02122950553894043,0
+sin,smoke,epfl,aiger,data/raw/benchmarks/prepared/sin.aag,data/raw/benchmarks/prepared/sin.aag,24,1.0,26,26,unknown,0.02071356773376465,0

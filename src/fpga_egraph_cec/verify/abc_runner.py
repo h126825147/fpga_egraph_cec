@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from pathlib import Path
 import subprocess
 import time
 
@@ -14,17 +15,36 @@ class VerificationResult:
 
 
 def run_abc_verify(aig_path: str, timeout_sec: int = 300, abc_bin: str = "abc") -> VerificationResult:
-    t0 = time.time()
-    try:
-        cmd = [abc_bin, "-c", f"read {aig_path}; strash; cec"]
-        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout_sec)
-        out = proc.stdout + "\n" + proc.stderr
+    """
+    Minimal ABC verification wrapper.
 
+    Expected usage:
+      - aig_path points to a valid AIG/AAG file
+      - abc_bin points to the ABC executable
+    """
+    t0 = time.time()
+    cmd = [abc_bin, "-c", f"read {aig_path}; strash; cec"]
+
+    try:
+        if not Path(aig_path).exists():
+            return VerificationResult(
+                status="input_not_found",
+                time_sec=time.time() - t0,
+                raw_output=f"Input file not found: {aig_path}",
+                details={"cmd": cmd},
+            )
+
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout_sec)
+        out = (proc.stdout or "") + "\n" + (proc.stderr or "")
+
+        low = out.lower()
         status = "unknown"
-        if "Networks are equivalent" in out or "equivalent" in out.lower():
+        if "networks are equivalent" in low or "equivalent" in low:
             status = "equivalent"
-        elif "Networks are NOT equivalent" in out or "not equivalent" in out.lower():
+        elif "networks are not equivalent" in low or "not equivalent" in low:
             status = "not_equivalent"
+        elif "timeout" in low:
+            status = "timeout"
 
         return VerificationResult(
             status=status,
@@ -32,6 +52,7 @@ def run_abc_verify(aig_path: str, timeout_sec: int = 300, abc_bin: str = "abc") 
             raw_output=out,
             details={"returncode": proc.returncode, "cmd": cmd},
         )
+
     except subprocess.TimeoutExpired as e:
         return VerificationResult(
             status="timeout",

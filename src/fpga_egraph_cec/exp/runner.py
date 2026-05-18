@@ -19,6 +19,7 @@ def run_experiment(cases: list[BenchmarkCase], config: dict[str, Any]) -> list[d
 
     yosys_bin = config.get("yosys", {}).get("binary", "yosys") if config.get("yosys", {}).get("enabled", False) else None
     abc_bin = config.get("abc", {}).get("binary", "abc") if config.get("abc", {}).get("enabled", False) else "abc"
+    abc_timeout = int(config.get("abc", {}).get("timeout_sec", config.get("timeout_sec", 300)))
 
     for case in cases:
         prepared_case = case
@@ -26,15 +27,17 @@ def run_experiment(cases: list[BenchmarkCase], config: dict[str, Any]) -> list[d
             prepared_case = convert_to_aag(case, prep_dir, yosys_bin=yosys_bin)
 
         circuit = load_aag(prepared_case.path)
-        norm = normalize_circuit(circuit)
+        norm = normalize_circuit(circuit, config.get("normalize", {}))
 
         aligned = align_circuits(norm, norm)
         standard_miter = build_miter(norm, norm)
         aligned_miter = build_aligned_miter(norm, norm, aligned)
 
+        # 最小闭环：先用当前可用的 AIG 输入做 ABC 可执行性验证
+        # 后续导出 miter 后，把这里换成 miter_path
         verify_res = run_abc_verify(
             prepared_case.path,
-            timeout_sec=int(config.get("abc", {}).get("timeout_sec", config.get("timeout_sec", 300))),
+            timeout_sec=abc_timeout,
             abc_bin=abc_bin,
         )
 
@@ -51,6 +54,7 @@ def run_experiment(cases: list[BenchmarkCase], config: dict[str, Any]) -> list[d
             "aligned_miter_size": aligned_miter.size(),
             "verify_status": verify_res.status,
             "verify_time": verify_res.time_sec,
+            "abc_returncode": verify_res.details.get("returncode"),
         }
         results.append(row)
 
