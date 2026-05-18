@@ -1,6 +1,6 @@
 {
   "group": "smoke",
-  "elapsed_sec": 0.07670331001281738,
+  "elapsed_sec": 0.12749314308166504,
   "results": [
     {
       "name": "adder",
@@ -14,7 +14,7 @@
       "standard_miter_size": 130,
       "aligned_miter_size": 130,
       "verify_status": "unknown",
-      "verify_time": 0.01967930793762207,
+      "verify_time": 0.020892620086669922,
       "abc_returncode": 0
     },
     {
@@ -29,7 +29,7 @@
       "standard_miter_size": 129,
       "aligned_miter_size": 129,
       "verify_status": "unknown",
-      "verify_time": 0.02122950553894043,
+      "verify_time": 0.021195650100708008,
       "abc_returncode": 0
     },
     {
@@ -44,7 +44,7 @@
       "standard_miter_size": 26,
       "aligned_miter_size": 26,
       "verify_status": "unknown",
-      "verify_time": 0.02071356773376465,
+      "verify_time": 0.02104330062866211,
       "abc_returncode": 0
     }
   ]

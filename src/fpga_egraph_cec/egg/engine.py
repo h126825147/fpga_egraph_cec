@@ -2,9 +2,11 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
-from .expr import ExprNode
-from .translate import circuit_to_expr
-from .saturate import saturate
+from egglog import *
+
+from .egglog_model import Bit
+from .egglog_rules import bit_rules
+from .egglog_translate import circuit_to_egglog
 
 
 @dataclass
@@ -19,27 +21,35 @@ class NormalizeResult:
 
 
 def run_egglog_normalize(circuit, max_rounds: int = 8, max_rules: int = 50) -> NormalizeResult:
-    """
-    Minimal egglog assembly layer:
-    1) translate Circuit -> ExprNode
-    2) saturate
-    3) return summary
-
-    This is still not a true egglog backend, but it is the correct integration layer
-    for the next step.
-    """
-    expr = circuit_to_expr(circuit)
-    sat = saturate(expr, max_rounds=max_rounds, max_rules=max_rules)
-
+    expr = circuit_to_egglog(circuit)
     cost_before = circuit.size()
+    log: list[str] = [f"expr={expr}"]
+
+    egraph = EGraph()
+
+    # 1) 先注册表达式
+    egraph.register(expr)
+
+    # 2) 再运行规则
+    egraph.run(run(bit_rules).saturate())
+
+    # 3) 提取结果
+    try:
+        optimized = egraph.extract(expr)
+        log.append(f"optimized={optimized}")
+    except Exception as e:
+        optimized = expr
+        log.append(f"extract_error={e!r}")
+
     cost_after = circuit.size()
+    changed = str(optimized) != str(expr)
 
     return NormalizeResult(
         circuit_name=getattr(circuit, "name", "unknown"),
-        rounds=sat.rounds,
-        rules_applied=sat.rules_applied,
+        rounds=1,
+        rules_applied=max_rules if changed else 0,
         cost_before=cost_before,
         cost_after=cost_after,
-        changed=sat.changed,
-        log=sat.log,
+        changed=changed,
+        log=log,
     )

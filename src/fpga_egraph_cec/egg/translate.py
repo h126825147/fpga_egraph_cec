@@ -2,31 +2,41 @@ from __future__ import annotations
 
 from ..ir.circuit import Circuit
 from ..ir.node import Node
-from .expr import ExprNode
+from .circuit_terms import Term
 
 
-def circuit_to_expr(circuit: Circuit) -> ExprNode:
+def circuit_to_expr(circuit: Circuit) -> Term:
     """
-    Minimal translation from Circuit IR to ExprNode.
+    Best-effort translation from Circuit IR to a symbolic term tree.
     """
-    node_map: dict[int, ExprNode] = {}
+    node_map: dict[int, Term] = {}
 
-    # inputs
-    for nid in getattr(circuit, "inputs", []):
-        node_map[nid] = ExprNode(op="INPUT", value=nid)
+    inputs = list(getattr(circuit, "inputs", []))
+    outputs = list(getattr(circuit, "outputs", []))
 
-    # best-effort translation of nodes
-    for node in getattr(circuit, "nodes", {}).values() if hasattr(circuit, "nodes") else []:
-        if not isinstance(node, Node):
-            continue
-        args = tuple(node_map.get(a, ExprNode(op="VAR", value=a)) for a in node.args)
-        node_map[node.id] = ExprNode(op=node.op, args=args)
+    # create explicit input terms
+    for nid in inputs:
+        node_map[nid] = Term(op="INPUT", value=nid)
 
-    # outputs
-    outs = []
-    for oid in getattr(circuit, "outputs", []):
-        outs.append(node_map.get(oid, ExprNode(op="VAR", value=oid)))
+    # translate node objects if available
+    if hasattr(circuit, "nodes"):
+        nodes_obj = getattr(circuit, "nodes")
+        if isinstance(nodes_obj, dict):
+            node_iter = nodes_obj.values()
+        else:
+            node_iter = nodes_obj
 
-    if len(outs) == 1:
-        return outs[0]
-    return ExprNode(op="TUPLE", args=tuple(outs))
+        for node in node_iter:
+            if not isinstance(node, Node):
+                continue
+            args = tuple(node_map.get(a, Term(op="VAR", value=a)) for a in getattr(node, "args", ()))
+            node_map[node.id] = Term(op=node.op, args=args)
+
+    # build output terms
+    out_terms = []
+    for oid in outputs:
+        out_terms.append(node_map.get(oid, Term(op="VAR", value=oid)))
+
+    if len(out_terms) == 1:
+        return out_terms[0]
+    return Term(op="TUPLE", args=tuple(out_terms))
