@@ -1,6 +1,6 @@
 {
   "group": "smoke",
-  "elapsed_sec": 0.12749314308166504,
+  "elapsed_sec": 6.562548398971558,
   "results": [
     {
       "name": "adder",
@@ -9,12 +9,12 @@
       "kind": "aiger",
       "path": "data/raw/benchmarks/prepared/adder.aag",
       "aig_path": "data/raw/benchmarks/prepared/adder.aag",
-      "circuit_size": 256,
+      "circuit_size": 1276,
       "alignment_score": 1.0,
       "standard_miter_size": 130,
       "aligned_miter_size": 130,
       "verify_status": "unknown",
-      "verify_time": 0.020892620086669922,
+      "verify_time": 0.021904468536376953,
       "abc_returncode": 0
     },
     {
@@ -24,12 +24,12 @@
       "kind": "aiger",
       "path": "data/raw/benchmarks/prepared/bar.aag",
       "aig_path": "data/raw/benchmarks/prepared/bar.aag",
-      "circuit_size": 135,
+      "circuit_size": 3471,
       "alignment_score": 1.0,
       "standard_miter_size": 129,
       "aligned_miter_size": 129,
       "verify_status": "unknown",
-      "verify_time": 0.021195650100708008,
+      "verify_time": 0.020833730697631836,
       "abc_returncode": 0
     },
     {
@@ -39,12 +39,12 @@
       "kind": "aiger",
       "path": "data/raw/benchmarks/prepared/sin.aag",
       "aig_path": "data/raw/benchmarks/prepared/sin.aag",
-      "circuit_size": 24,
+      "circuit_size": 5440,
       "alignment_score": 1.0,
       "standard_miter_size": 26,
       "aligned_miter_size": 26,
       "verify_status": "unknown",
-      "verify_time": 0.02104330062866211,
+      "verify_time": 0.020757436752319336,
       "abc_returncode": 0
     }
   ]

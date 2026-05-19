@@ -7,6 +7,7 @@ from egglog import *
 from .egglog_model import Bit
 from .egglog_rules import bit_rules
 from .egglog_translate import circuit_to_egglog
+from .translate_precise import circuit_to_egglog_precise
 
 
 @dataclass
@@ -21,19 +22,19 @@ class NormalizeResult:
 
 
 def run_egglog_normalize(circuit, max_rounds: int = 8, max_rules: int = 50) -> NormalizeResult:
-    expr = circuit_to_egglog(circuit)
+    # 优先用更精细的翻译
+    try:
+        expr = circuit_to_egglog_precise(circuit)
+    except Exception:
+        expr = circuit_to_egglog(circuit)
+
     cost_before = circuit.size()
     log: list[str] = [f"expr={expr}"]
 
     egraph = EGraph()
-
-    # 1) 先注册表达式
     egraph.register(expr)
-
-    # 2) 再运行规则
     egraph.run(run(bit_rules).saturate())
 
-    # 3) 提取结果
     try:
         optimized = egraph.extract(expr)
         log.append(f"optimized={optimized}")
@@ -41,7 +42,6 @@ def run_egglog_normalize(circuit, max_rounds: int = 8, max_rules: int = 50) -> N
         optimized = expr
         log.append(f"extract_error={e!r}")
 
-    cost_after = circuit.size()
     changed = str(optimized) != str(expr)
 
     return NormalizeResult(
@@ -49,7 +49,7 @@ def run_egglog_normalize(circuit, max_rounds: int = 8, max_rules: int = 50) -> N
         rounds=1,
         rules_applied=max_rules if changed else 0,
         cost_before=cost_before,
-        cost_after=cost_after,
+        cost_after=cost_before,
         changed=changed,
         log=log,
     )

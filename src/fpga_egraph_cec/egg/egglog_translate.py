@@ -6,9 +6,6 @@ from .egglog_model import Bit
 
 
 def circuit_to_egglog(circuit: Circuit) -> Bit:
-    """
-    Best-effort translation from internal Circuit IR to egglog Bit expressions.
-    """
     node_map: dict[int, Bit] = {}
 
     # inputs
@@ -16,39 +13,49 @@ def circuit_to_egglog(circuit: Circuit) -> Bit:
         node_map[nid] = Bit.var(f"in{nid}")
 
     # nodes
-    node_container = getattr(circuit, "nodes", None)
-    if isinstance(node_container, dict):
-        node_iter = node_container.values()
-    elif node_container is None:
-        node_iter = []
+    nodes = getattr(circuit, "nodes", {})
+    if isinstance(nodes, dict):
+        node_items = nodes.items()
     else:
-        node_iter = node_container
+        node_items = [(getattr(n, "id", None), n) for n in nodes]
 
-    for node in node_iter:
+    # recursive builder
+    def build(nid: int) -> Bit:
+        if nid in node_map:
+            return node_map[nid]
+
+        node = nodes.get(nid)
+        if node is None:
+            node_map[nid] = Bit.var(f"out{nid}")
+            return node_map[nid]
+
         if not isinstance(node, Node):
-            continue
+            node_map[nid] = Bit.var(f"out{nid}")
+            return node_map[nid]
 
-        args = [node_map.get(a, Bit.var(f"in{a}")) for a in getattr(node, "args", ())]
-        op = getattr(node, "op", "").upper()
+        op = (node.op or "").upper()
+        args = [build(a) for a in node.args]
 
-        if op in {"INPUT"}:
-            node_map[node.id] = Bit.var(node.name or f"in{node.id}")
-        elif op in {"NOT", "~"} and len(args) == 1:
-            node_map[node.id] = ~args[0]
+        if op == "INPUT":
+            expr = Bit.var(node.name or f"in{nid}")
         elif op in {"AND", "&"} and len(args) == 2:
-            node_map[node.id] = args[0] & args[1]
+            expr = args[0] & args[1]
         elif op in {"OR", "|"} and len(args) == 2:
-            node_map[node.id] = args[0] | args[1]
+            expr = args[0] | args[1]
         elif op in {"XOR", "^"} and len(args) == 2:
-            node_map[node.id] = args[0] ^ args[1]
+            expr = args[0] ^ args[1]
+        elif op in {"NOT", "~"} and len(args) == 1:
+            expr = ~args[0]
         else:
-            # fallback：保留变量，不丢结构
-            node_map[node.id] = Bit.var(f"n{node.id}")
+            expr = Bit.var(f"n{nid}")
 
-    outputs = getattr(circuit, "outputs", [])
+        node_map[nid] = expr
+        return expr
+
+    outputs = list(getattr(circuit, "outputs", []))
     if not outputs:
         return Bit.var("empty")
 
-    # v1 只处理单 root，多个输出时先返回第一个
-    root = outputs[0]
-    return node_map.get(root, Bit.var(f"out{root}"))
+    # AIGER output may point to node ids
+    root_id = outputs[0]
+    return build(root_id)
